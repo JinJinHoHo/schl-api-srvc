@@ -1,7 +1,7 @@
 package com.vstr.apisrvc.core.exception;
 
 import com.vstr.apisrvc.core.code.HttpCode;
-import com.vstr.apisrvc.core.response.ErrorResponse;
+import com.vstr.apisrvc.core.http.response.ErrorResponse;
 import lombok.Getter;
 
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.vstr.apisrvc.core;
+package com.vstr.apisrvc.core.http;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

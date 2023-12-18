@@ -16,15 +16,15 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
+import static com.vstr.apisrvc.core.security.HeaderAndCookieSessionIdResolver.HEADER_X_AUTH_TOKEN;
+
 @Configuration
 public class OpenAPIConfig {
 
-    private final String AUTH_TOKEN_HEADER = "X-AUTH-TOKEN";
-
     @Bean
     public OpenAPI openAPI(
-            ServerProperties serverProperties,
-            ManagementServerProperties managementServerProperties
+            ServerProperties serverProperties
+            //, ManagementServerProperties managementServerProperties
     ) {
 
         Integer port = serverProperties.getPort();
@@ -41,12 +41,12 @@ public class OpenAPIConfig {
                         .version("v0.0.1")
                 )
                 .security(List.of(new SecurityRequirement()
-                        .addList(AUTH_TOKEN_HEADER)
+                        .addList(HEADER_X_AUTH_TOKEN)
                 ))
                 .components(
                         new Components()
                                 .addSecuritySchemes(
-                                        AUTH_TOKEN_HEADER,
+                                        HEADER_X_AUTH_TOKEN,
                                         new SecurityScheme()
                                                 .name("Authorization")
                                                 .type(SecurityScheme.Type.HTTP)

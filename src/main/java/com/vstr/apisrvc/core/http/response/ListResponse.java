@@ -1,7 +1,6 @@
-package com.vstr.apisrvc.core.response;
+package com.vstr.apisrvc.core.http.response;
 
 import com.vstr.apisrvc.core.code.HttpCode;
-import com.vstr.apisrvc.core.response.Response;
 import lombok.Getter;
 
 import java.util.List;

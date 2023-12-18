@@ -4,11 +4,11 @@ import com.vstr.apisrvc.core.code.HttpCode;
 
 public class AuthException extends SrvcException {
 
-    public AuthException(HttpCode code) {
-        super(code);
+    public AuthException() {
+        super(HttpCode.unauthorized);
     }
 
-    public String getHttpCode() {
-        return "401";
+    public AuthException(String msg) {
+        super(HttpCode.unauthorized, msg);
     }
 }

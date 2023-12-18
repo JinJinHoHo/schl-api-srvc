@@ -18,10 +18,10 @@ public class SignLoginRequest {
     private SrvcAuthority srvc;
 
     @NotBlank
-    @Schema(description = "사용자 ID", requiredMode = REQUIRED, defaultValue = "test")
+    @Schema(description = "사용자 ID", requiredMode = REQUIRED, defaultValue = "user")
     private String usrId;
 
     @NotBlank
-    @Schema(description = "사용자 패스워드", requiredMode = REQUIRED, defaultValue = "test")
+    @Schema(description = "사용자 패스워드", requiredMode = REQUIRED, defaultValue = "password")
     private String pswd;
 }

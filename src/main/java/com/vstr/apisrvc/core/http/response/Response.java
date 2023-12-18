@@ -1,6 +1,5 @@
-package com.vstr.apisrvc.core.response;
+package com.vstr.apisrvc.core.http.response;
 
-import com.vstr.apisrvc.core.ReqContext;
 import com.vstr.apisrvc.core.code.HttpCode;
 import lombok.Getter;
 
@@ -20,8 +19,6 @@ public class Response {
     public Response(HttpCode code) {
         timestamp = new Date();
         requestId = "";
-
-//        requestId = ReqContext.getRequestId();
         this.code = code;
         this.message = code.getMsg();
     }
@@ -30,5 +27,9 @@ public class Response {
     public Response(HttpCode code, String message) {
         this(code);
         this.message = message;
+    }
+
+    public static Response getResponseSuccess() {
+        return new Response(HttpCode.success);
     }
 }

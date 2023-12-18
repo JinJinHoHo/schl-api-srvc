@@ -1,6 +1,9 @@
 package com.vstr.apisrvc.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vstr.apisrvc.core.security.HeaderAndCookieSessionIdResolver;
+import com.vstr.apisrvc.core.security.MngmUserAuthenticationToken;
+import com.vstr.apisrvc.core.security.VstrsUserAuthenticationToken;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +12,6 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.security.jackson2.SecurityJackson2Modules;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
-import org.springframework.session.web.http.DefaultCookieSerializer;
 import org.springframework.session.web.http.HttpSessionIdResolver;
 
 @Configuration
@@ -28,8 +30,11 @@ public class SessionConfig implements BeanClassLoaderAware {
     public RedisSerializer<Object> springSessionDefaultRedisSerializer() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModules(SecurityJackson2Modules.getModules(this.loader));
+//        mapper.registerModule(new SimpleModule().setMixInAnnotation());
+        mapper.registerSubtypes(MngmUserAuthenticationToken.class, VstrsUserAuthenticationToken.class);
         return new GenericJackson2JsonRedisSerializer(mapper);
     }
+
 
     /*
      * @see
@@ -40,12 +45,6 @@ public class SessionConfig implements BeanClassLoaderAware {
     public void setBeanClassLoader(ClassLoader classLoader) {
         this.loader = classLoader;
     }
-
-
-//    @Bean
-//    public HttpSessionEventPublisher httpSessionEventPublisher() {
-//        return new HttpSessionEventPublisher();
-//    }
 
     @Bean
     public HttpSessionIdResolver sessionIdResolver() {

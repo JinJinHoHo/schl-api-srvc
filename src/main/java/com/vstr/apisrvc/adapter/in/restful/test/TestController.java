@@ -2,8 +2,8 @@ package com.vstr.apisrvc.adapter.in.restful.test;
 
 import com.vstr.apisrvc.core.code.HttpCode;
 import com.vstr.apisrvc.core.exception.BizException;
-import com.vstr.apisrvc.core.response.ItemResponse;
-import com.vstr.apisrvc.core.response.Response;
+import com.vstr.apisrvc.core.http.response.ItemResponse;
+import com.vstr.apisrvc.core.http.response.Response;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,9 +47,7 @@ public class TestController {
         Map<String, Object> m = new HashMap<>();
         session.getAttributeNames()
                 .asIterator()
-                .forEachRemaining(s -> {
-                    m.put(s, session.getAttribute(s));
-                });
+                .forEachRemaining(s -> m.put(s, session.getAttribute(s)));
         return new ItemResponse<>(HttpCode.success, m);
     }
 }

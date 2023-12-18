@@ -1,4 +1,4 @@
-package com.vstr.apisrvc.core;
+package com.vstr.apisrvc.core.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
