@@ -4,7 +4,7 @@ import com.vstr.apisrvc.core.code.HttpCode;
 import com.vstr.apisrvc.core.exception.AuthException;
 import com.vstr.apisrvc.core.http.response.ItemResponse;
 import com.vstr.apisrvc.core.http.response.Response;
-import com.vstr.apisrvc.core.security.MngmUserAuthenticationToken;
+import com.vstr.apisrvc.core.security.SrvcAuthority;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -40,15 +40,18 @@ public class SignController {
         if (beforeAuthentication.isAuthenticated()
             && beforeAuthentication.getName().equals(signLoginRequest.getUsrId())) {
             return new ItemResponse<>(HttpCode.success, beforeAuthentication.getDetails());
-
         }
 
+        SrvcAuthority srvcAuthority = signLoginRequest.getSrvc();
+        if (srvcAuthority == null) throw new IllegalArgumentException("로그이 지원 안됨.");
+
         //인증용 토큰 생성.
-        Authentication token = MngmUserAuthenticationToken.unauthenticated(
-                signLoginRequest.getUsrId(), signLoginRequest.getPswd());
+        Authentication authenticationToken = srvcAuthority.publishAuthenticationToken(
+                signLoginRequest.getUsrId(), signLoginRequest.getPswd()
+        );
 
         //인증
-        Authentication authentication = authenticationManager.authenticate(token);
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
         //SecurityContext 인증 정보 설정.
         context.setAuthentication(authentication);

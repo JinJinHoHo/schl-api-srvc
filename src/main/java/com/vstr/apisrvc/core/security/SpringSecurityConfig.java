@@ -78,8 +78,8 @@ public class SpringSecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager() {
         return new ProviderManager(List.of(
-                new MngmUserAuthenticationProvider(mngmUserService),
-                new VstrsUserAuthenticationProvider(vstrsUserService))
-        );
+                SrvcAuthority.MNGM.getProviderExecute(mngmUserService),
+                SrvcAuthority.VSTRS.getProviderExecute(vstrsUserService)
+        ));
     }
 }

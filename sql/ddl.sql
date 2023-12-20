@@ -1,0 +1,670 @@
+-- 내 스키마
+CREATE SCHEMA SCHUL;
+
+-- 학교방문자
+CREATE TABLE SCHUL.SCHUL_VISITR
+(
+    VISITR_NO            SERIAL       NOT NULL, -- 방문자번호
+    SCHUL_NO             INTEGER      NOT NULL, -- 학교번호
+    VISITR_IDNTFR        VARCHAR(300) NOT NULL, -- 방문자식별자
+    NM                   VARCHAR(50)  NOT NULL, -- 이름
+    PSITN                VARCHAR(50)  NULL,     -- 소속
+    OFCPS                VARCHAR(50)  NULL,     -- 직위
+    CTTPC                VARCHAR(30)  NOT NULL, -- 연락처
+    SEXDSTN              VARCHAR(30)  NOT NULL, -- 성별
+    LAST_LOGIN_DT        TIMESTAMP    NOT NULL, -- 마지막로그인일시
+    VISIT_CREAT_DT       TIMESTAMP    NOT NULL, -- 방문생성일시
+    VISIT_UPDDE_CITY     TIMESTAMP    NOT NULL, -- 방문수정일시
+    MANAGE_CREAT_MNGR_NO INTEGER      NULL     DEFAULT 0, -- 관리생성관리자번호
+    MANAGE_CREAT_DT      TIMESTAMP    NULL,     -- 관리생성일시
+    MANAGE_UPDT_MNGR_NO  INTEGER      NULL,     -- 관리수정관리자번호
+    MANAGE_UPDDE_CITY    TIMESTAMP    NULL      -- 관리수정일시
+);
+
+-- 학교방문자
+COMMENT ON TABLE SCHUL.SCHUL_VISITR IS '학교방문자';
+
+-- 방문자번호
+COMMENT ON COLUMN SCHUL.SCHUL_VISITR.VISITR_NO IS '방문자번호';
+
+-- 학교번호
+COMMENT ON COLUMN SCHUL.SCHUL_VISITR.SCHUL_NO IS '학교번호';
+
+-- 방문자식별자
+COMMENT ON COLUMN SCHUL.SCHUL_VISITR.VISITR_IDNTFR IS '방문자식별자';
+
+-- 이름
+COMMENT ON COLUMN SCHUL.SCHUL_VISITR.NM IS '이름';
+
+-- 소속
+COMMENT ON COLUMN SCHUL.SCHUL_VISITR.PSITN IS '소속';
+
+-- 직위
+COMMENT ON COLUMN SCHUL.SCHUL_VISITR.OFCPS IS '직위';
+
+-- 연락처
+COMMENT ON COLUMN SCHUL.SCHUL_VISITR.CTTPC IS '연락처';
+
+-- 성별
+COMMENT ON COLUMN SCHUL.SCHUL_VISITR.SEXDSTN IS '성별';
+
+-- 마지막로그인일시
+COMMENT ON COLUMN SCHUL.SCHUL_VISITR.LAST_LOGIN_DT IS '마지막로그인일시';
+
+-- 방문생성일시
+COMMENT ON COLUMN SCHUL.SCHUL_VISITR.VISIT_CREAT_DT IS '방문생성일시';
+
+-- 방문수정일시
+COMMENT ON COLUMN SCHUL.SCHUL_VISITR.VISIT_UPDDE_CITY IS '방문수정일시';
+
+-- 관리생성관리자번호
+COMMENT ON COLUMN SCHUL.SCHUL_VISITR.MANAGE_CREAT_MNGR_NO IS '관리생성관리자번호';
+
+-- 관리생성일시
+COMMENT ON COLUMN SCHUL.SCHUL_VISITR.MANAGE_CREAT_DT IS '관리생성일시';
+
+-- 관리수정관리자번호
+COMMENT ON COLUMN SCHUL.SCHUL_VISITR.MANAGE_UPDT_MNGR_NO IS '관리수정관리자번호';
+
+-- 관리수정일시
+COMMENT ON COLUMN SCHUL.SCHUL_VISITR.MANAGE_UPDDE_CITY IS '관리수정일시';
+
+-- 학교방문자 기본키
+CREATE UNIQUE INDEX PK_SCHUL_VISITR
+    ON SCHUL.SCHUL_VISITR
+        ( -- 학교방문자
+         VISITR_NO ASC -- 방문자번호
+            );
+
+-- 학교방문자 기본키
+COMMENT ON INDEX SCHUL.PK_SCHUL_VISITR IS '학교방문자 기본키';
+
+-- 학교방문자 유니크 인덱스
+CREATE UNIQUE INDEX UIX_SCHUL_VISITR
+    ON SCHUL.SCHUL_VISITR
+        ( -- 학교방문자
+         VISITR_IDNTFR ASC -- 방문자식별자
+            );
+
+-- 학교방문자 유니크 인덱스
+COMMENT ON INDEX SCHUL.UIX_SCHUL_VISITR IS '학교방문자 유니크 인덱스';
+
+-- 학교방문자
+ALTER TABLE SCHUL.SCHUL_VISITR
+    ADD CONSTRAINT PK_SCHUL_VISITR
+        -- 학교방문자 기본키
+        PRIMARY KEY
+    USING INDEX PK_SCHUL_VISITR
+    NOT DEFERRABLE;
+
+-- 학교방문자 기본키
+COMMENT ON CONSTRAINT PK_SCHUL_VISITR ON SCHUL.SCHUL_VISITR IS '학교방문자 기본키';
+
+-- 학교방문자
+ALTER TABLE SCHUL.SCHUL_VISITR
+    ADD CONSTRAINT UK_SCHUL_VISITR -- 학교방문자 유니크 제약
+        UNIQUE
+    USING INDEX UIX_SCHUL_VISITR
+    NOT DEFERRABLE;
+
+-- 학교방문자 유니크 제약
+COMMENT ON CONSTRAINT UK_SCHUL_VISITR ON SCHUL.SCHUL_VISITR IS '학교방문자 유니크 제약';
+
+-- 학교방문정보
+CREATE TABLE SCHUL.SCHUL_VISIT_INFO
+(
+    VISIT_INFO_NO        SERIAL      NOT NULL, -- 방문정보번호
+    VISITR_NO            INTEGER     NOT NULL, -- 방문자번호
+    VISIT_DE             DATE        NOT NULL, -- 방문일자
+    VISIT_PURPS          TEXT        NOT NULL, -- 방문목적
+    VISIT_STTUS_CODE     VARCHAR(30) NOT NULL, -- 방문상태코드
+    ENTNC_DT             TIMESTAMP   NULL,     -- 입장일시
+    COL                  TIMESTAMP   NULL,     -- 퇴장일시
+    VISIT_CREAT_DT       TIMESTAMP   NOT NULL, -- 방문생성일시
+    VISIT_UPDDE_CITY     TIMESTAMP   NOT NULL, -- 방문수정일시
+    MANAGE_CREAT_MNGR_NO INTEGER     NULL     DEFAULT 0, -- 관리생성관리자번호
+    MANAGE_CREAT_DT      TIMESTAMP   NULL,     -- 관리생성일시
+    MANAGE_UPDT_MNGR_NO  INTEGER     NULL,     -- 관리수정관리자번호
+    MANAGE_UPDDE_CITY    TIMESTAMP   NULL,     -- 관리수정일시
+    SYS_UPDDE_CITY       TIMESTAMP   NULL      -- 시스템수정일시
+);
+
+-- 학교방문정보
+COMMENT ON TABLE SCHUL.SCHUL_VISIT_INFO IS '학교방문정보';
+
+-- 방문정보번호
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_INFO.VISIT_INFO_NO IS '방문정보번호';
+
+-- 방문자번호
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_INFO.VISITR_NO IS '방문자번호';
+
+-- 방문일자
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_INFO.VISIT_DE IS '방문일자';
+
+-- 방문목적
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_INFO.VISIT_PURPS IS '방문목적';
+
+-- 방문상태코드
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_INFO.VISIT_STTUS_CODE IS '방문상태코드';
+
+-- 입장일시
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_INFO.ENTNC_DT IS '입장일시';
+
+-- 퇴장일시
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_INFO.COL IS '퇴장일시';
+
+-- 방문생성일시
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_INFO.VISIT_CREAT_DT IS '방문생성일시';
+
+-- 방문수정일시
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_INFO.VISIT_UPDDE_CITY IS '방문수정일시';
+
+-- 관리생성관리자번호
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_INFO.MANAGE_CREAT_MNGR_NO IS '관리생성관리자번호';
+
+-- 관리생성일시
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_INFO.MANAGE_CREAT_DT IS '관리생성일시';
+
+-- 관리수정관리자번호
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_INFO.MANAGE_UPDT_MNGR_NO IS '관리수정관리자번호';
+
+-- 관리수정일시
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_INFO.MANAGE_UPDDE_CITY IS '관리수정일시';
+
+-- 시스템수정일시
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_INFO.SYS_UPDDE_CITY IS '시스템수정일시';
+
+-- 학교방문정보 기본키
+CREATE UNIQUE INDEX PK_SCHUL_VISIT_INFO
+    ON SCHUL.SCHUL_VISIT_INFO
+        ( -- 학교방문정보
+         VISIT_INFO_NO ASC -- 방문정보번호
+            );
+
+-- 학교방문정보 기본키
+COMMENT ON INDEX SCHUL.PK_SCHUL_VISIT_INFO IS '학교방문정보 기본키';
+
+-- 학교방문정보
+ALTER TABLE SCHUL.SCHUL_VISIT_INFO
+    ADD CONSTRAINT PK_SCHUL_VISIT_INFO
+        -- 학교방문정보 기본키
+        PRIMARY KEY
+    USING INDEX PK_SCHUL_VISIT_INFO
+    NOT DEFERRABLE;
+
+-- 학교방문정보 기본키
+COMMENT ON CONSTRAINT PK_SCHUL_VISIT_INFO ON SCHUL.SCHUL_VISIT_INFO IS '학교방문정보 기본키';
+
+-- 학교방문차량
+CREATE TABLE SCHUL.SCHUL_VISIT_VHCLE
+(
+    VISIT_VHCLE_NO       VARCHAR(15) NOT NULL, -- 방문차량번호
+    VISIT_INFO_NO        INTEGER     NOT NULL, -- 방문정보번호
+    VHCTY                VARCHAR(50) NOT NULL, -- 차종
+    VISIT_CREAT_DT       TIMESTAMP   NOT NULL, -- 방문생성일시
+    VISIT_UPDDE_CITY     TIMESTAMP   NOT NULL, -- 방문수정일시
+    MANAGE_CREAT_MNGR_NO INTEGER     NOT NULL DEFAULT 0, -- 관리생성관리자번호
+    MANAGE_CREAT_DT      TIMESTAMP   NOT NULL, -- 관리생성일시
+    MANAGE_UPDT_MNGR_NO  INTEGER     NOT NULL, -- 관리수정관리자번호
+    MANAGE_UPDDE_CITY    TIMESTAMP   NOT NULL  -- 관리수정일시
+);
+
+-- 학교방문차량
+COMMENT ON TABLE SCHUL.SCHUL_VISIT_VHCLE IS '학교방문차량';
+
+-- 방문차량번호
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_VHCLE.VISIT_VHCLE_NO IS '방문차량번호';
+
+-- 방문정보번호
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_VHCLE.VISIT_INFO_NO IS '방문정보번호';
+
+-- 차종
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_VHCLE.VHCTY IS '차종';
+
+-- 방문생성일시
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_VHCLE.VISIT_CREAT_DT IS '방문생성일시';
+
+-- 방문수정일시
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_VHCLE.VISIT_UPDDE_CITY IS '방문수정일시';
+
+-- 관리생성관리자번호
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_VHCLE.MANAGE_CREAT_MNGR_NO IS '관리생성관리자번호';
+
+-- 관리생성일시
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_VHCLE.MANAGE_CREAT_DT IS '관리생성일시';
+
+-- 관리수정관리자번호
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_VHCLE.MANAGE_UPDT_MNGR_NO IS '관리수정관리자번호';
+
+-- 관리수정일시
+COMMENT ON COLUMN SCHUL.SCHUL_VISIT_VHCLE.MANAGE_UPDDE_CITY IS '관리수정일시';
+
+-- 학교방문차량 기본키
+CREATE UNIQUE INDEX PK_SCHUL_VISIT_VHCLE
+    ON SCHUL.SCHUL_VISIT_VHCLE
+        ( -- 학교방문차량
+         VISIT_VHCLE_NO ASC, -- 방문차량번호
+         VISIT_INFO_NO ASC -- 방문정보번호
+            );
+
+-- 학교방문차량 기본키
+COMMENT ON INDEX SCHUL.PK_SCHUL_VISIT_VHCLE IS '학교방문차량 기본키';
+
+-- 학교방문차량
+ALTER TABLE SCHUL.SCHUL_VISIT_VHCLE
+    ADD CONSTRAINT PK_SCHUL_VISIT_VHCLE
+        -- 학교방문차량 기본키
+        PRIMARY KEY
+    USING INDEX PK_SCHUL_VISIT_VHCLE
+    NOT DEFERRABLE;
+
+-- 학교방문차량 기본키
+COMMENT ON CONSTRAINT PK_SCHUL_VISIT_VHCLE ON SCHUL.SCHUL_VISIT_VHCLE IS '학교방문차량 기본키';
+
+-- 관리자
+CREATE TABLE SCHUL.MNGR
+(
+    MNGR_NO              SERIAL       NOT NULL, -- 관리자번호
+    MNGR_TY_CODE         VARCHAR(30)  NOT NULL, -- 관리자타입코드
+    MNGR_ID              VARCHAR(30)  NOT NULL, -- 관리자ID
+    MNGR_NM              VARCHAR(50)  NOT NULL, -- 관리자이름
+    PASSWORD             VARCHAR(255) NOT NULL, -- 패스워드
+    USE_AT               VARCHAR(30)  NOT NULL, -- 사용여부
+    LAST_LOGIN_DT        TIMESTAMP    NOT NULL, -- 마지막로그인일시
+    MANAGE_CREAT_MNGR_NO INTEGER      NOT NULL DEFAULT 0, -- 관리생성관리자번호
+    MANAGE_CREAT_DT      TIMESTAMP    NOT NULL, -- 관리생성일시
+    MANAGE_UPDT_MNGR_NO  INTEGER      NOT NULL, -- 관리수정관리자번호
+    MANAGE_UPDDE_CITY    TIMESTAMP    NOT NULL  -- 관리수정일시
+);
+
+-- 관리자
+COMMENT ON TABLE SCHUL.MNGR IS '관리자';
+
+-- 관리자번호
+COMMENT ON COLUMN SCHUL.MNGR.MNGR_NO IS '관리자번호';
+
+-- 관리자타입코드
+COMMENT ON COLUMN SCHUL.MNGR.MNGR_TY_CODE IS '관리자타입코드';
+
+-- 관리자ID
+COMMENT ON COLUMN SCHUL.MNGR.MNGR_ID IS '관리자ID';
+
+-- 관리자이름
+COMMENT ON COLUMN SCHUL.MNGR.MNGR_NM IS '관리자이름';
+
+-- 패스워드
+COMMENT ON COLUMN SCHUL.MNGR.PASSWORD IS '패스워드';
+
+-- 사용여부
+COMMENT ON COLUMN SCHUL.MNGR.USE_AT IS '사용여부';
+
+-- 마지막로그인일시
+COMMENT ON COLUMN SCHUL.MNGR.LAST_LOGIN_DT IS '마지막로그인일시';
+
+-- 관리생성관리자번호
+COMMENT ON COLUMN SCHUL.MNGR.MANAGE_CREAT_MNGR_NO IS '관리생성관리자번호';
+
+-- 관리생성일시
+COMMENT ON COLUMN SCHUL.MNGR.MANAGE_CREAT_DT IS '관리생성일시';
+
+-- 관리수정관리자번호
+COMMENT ON COLUMN SCHUL.MNGR.MANAGE_UPDT_MNGR_NO IS '관리수정관리자번호';
+
+-- 관리수정일시
+COMMENT ON COLUMN SCHUL.MNGR.MANAGE_UPDDE_CITY IS '관리수정일시';
+
+-- 관리자 기본키
+CREATE UNIQUE INDEX PK_MNGR
+    ON SCHUL.MNGR
+        ( -- 관리자
+         MNGR_NO ASC -- 관리자번호
+            );
+
+-- 관리자 기본키
+COMMENT ON INDEX SCHUL.PK_MNGR IS '관리자 기본키';
+
+-- 관리자 유니크 인덱스
+CREATE UNIQUE INDEX UIX_MNGR_01
+    ON SCHUL.MNGR
+        ( -- 관리자
+         MNGR_ID ASC -- 관리자ID
+            );
+
+-- 관리자 유니크 인덱스
+COMMENT ON INDEX SCHUL.UIX_MNGR_01 IS '관리자 유니크 인덱스';
+
+-- 관리자
+ALTER TABLE SCHUL.MNGR
+    ADD CONSTRAINT PK_MNGR
+        -- 관리자 기본키
+        PRIMARY KEY
+    USING INDEX PK_MNGR
+    NOT DEFERRABLE;
+
+-- 관리자 기본키
+COMMENT ON CONSTRAINT PK_MNGR ON SCHUL.MNGR IS '관리자 기본키';
+
+-- 관리자
+ALTER TABLE SCHUL.MNGR
+    ADD CONSTRAINT UK_MNGR -- 관리자 유니크 제약
+        UNIQUE
+    USING INDEX UIX_MNGR_01
+    NOT DEFERRABLE;
+
+-- 관리자 유니크 제약
+COMMENT ON CONSTRAINT UK_MNGR ON SCHUL.MNGR IS '관리자 유니크 제약';
+
+-- 학교
+CREATE TABLE SCHUL.SCHUL
+(
+    SCHUL_NO             SERIAL      NOT NULL, -- 학교번호
+    SCHUL_NM             VARCHAR(50) NOT NULL, -- 학교명
+    MANAGE_CREAT_DT      TIMESTAMP   NULL,     -- 관리생성일시
+    MANAGE_UPDT_MNGR_NO  INTEGER     NULL,     -- 관리수정관리자번호
+    MANAGE_UPDDE_CITY    TIMESTAMP   NULL,     -- 관리수정일시
+    MANAGE_CREAT_MNGR_NO INTEGER     NULL     DEFAULT 0 -- 관리생성관리자번호
+);
+
+-- 학교
+COMMENT ON TABLE SCHUL.SCHUL IS '학교';
+
+-- 학교번호
+COMMENT ON COLUMN SCHUL.SCHUL.SCHUL_NO IS '학교번호';
+
+-- 학교명
+COMMENT ON COLUMN SCHUL.SCHUL.SCHUL_NM IS '학교명';
+
+-- 관리생성일시
+COMMENT ON COLUMN SCHUL.SCHUL.MANAGE_CREAT_DT IS '관리생성일시';
+
+-- 관리수정관리자번호
+COMMENT ON COLUMN SCHUL.SCHUL.MANAGE_UPDT_MNGR_NO IS '관리수정관리자번호';
+
+-- 관리수정일시
+COMMENT ON COLUMN SCHUL.SCHUL.MANAGE_UPDDE_CITY IS '관리수정일시';
+
+-- 관리생성관리자번호
+COMMENT ON COLUMN SCHUL.SCHUL.MANAGE_CREAT_MNGR_NO IS '관리생성관리자번호';
+
+-- 학교 기본키
+CREATE UNIQUE INDEX PK_SCHUL
+    ON SCHUL.SCHUL
+        ( -- 학교
+         SCHUL_NO ASC -- 학교번호
+            );
+
+-- 학교 기본키
+COMMENT ON INDEX SCHUL.PK_SCHUL IS '학교 기본키';
+
+-- 학교
+ALTER TABLE SCHUL.SCHUL
+    ADD CONSTRAINT PK_SCHUL
+        -- 학교 기본키
+        PRIMARY KEY
+    USING INDEX PK_SCHUL
+    NOT DEFERRABLE;
+
+-- 학교 기본키
+COMMENT ON CONSTRAINT PK_SCHUL ON SCHUL.SCHUL IS '학교 기본키';
+
+-- 학교배치
+CREATE TABLE SCHUL.SCHUL_POSTNG
+(
+    SCHUL_BATCH_NO       SERIAL      NOT NULL, -- 학교배치번호
+    SCHUL_NO             INTEGER     NOT NULL, -- 학교번호
+    NM                   VARCHAR(50) NOT NULL, -- 명칭
+    MANAGE_CREAT_MNGR_NO INTEGER     NOT NULL DEFAULT 0, -- 관리생성관리자번호
+    MANAGE_CREAT_DT      TIMESTAMP   NOT NULL, -- 관리생성일시
+    MANAGE_UPDT_MNGR_NO  INTEGER     NOT NULL, -- 관리수정관리자번호
+    MANAGE_UPDDE_CITY    TIMESTAMP   NOT NULL  -- 관리수정일시
+);
+
+-- 학교배치
+COMMENT ON TABLE SCHUL.SCHUL_POSTNG IS '학교배치';
+
+-- 학교배치번호
+COMMENT ON COLUMN SCHUL.SCHUL_POSTNG.SCHUL_BATCH_NO IS '학교배치번호';
+
+-- 학교번호
+COMMENT ON COLUMN SCHUL.SCHUL_POSTNG.SCHUL_NO IS '학교번호';
+
+-- 명칭
+COMMENT ON COLUMN SCHUL.SCHUL_POSTNG.NM IS '명칭';
+
+-- 관리생성관리자번호
+COMMENT ON COLUMN SCHUL.SCHUL_POSTNG.MANAGE_CREAT_MNGR_NO IS '관리생성관리자번호';
+
+-- 관리생성일시
+COMMENT ON COLUMN SCHUL.SCHUL_POSTNG.MANAGE_CREAT_DT IS '관리생성일시';
+
+-- 관리수정관리자번호
+COMMENT ON COLUMN SCHUL.SCHUL_POSTNG.MANAGE_UPDT_MNGR_NO IS '관리수정관리자번호';
+
+-- 관리수정일시
+COMMENT ON COLUMN SCHUL.SCHUL_POSTNG.MANAGE_UPDDE_CITY IS '관리수정일시';
+
+-- 학교배치 기본키
+CREATE UNIQUE INDEX PK_SCHUL_POSTNG
+    ON SCHUL.SCHUL_POSTNG
+        ( -- 학교배치
+         SCHUL_BATCH_NO ASC -- 학교배치번호
+            );
+
+-- 학교배치 기본키
+COMMENT ON INDEX SCHUL.PK_SCHUL_POSTNG IS '학교배치 기본키';
+
+-- 학교배치
+ALTER TABLE SCHUL.SCHUL_POSTNG
+    ADD CONSTRAINT PK_SCHUL_POSTNG
+        -- 학교배치 기본키
+        PRIMARY KEY
+    USING INDEX PK_SCHUL_POSTNG
+    NOT DEFERRABLE;
+
+-- 학교배치 기본키
+COMMENT ON CONSTRAINT PK_SCHUL_POSTNG ON SCHUL.SCHUL_POSTNG IS '학교배치 기본키';
+
+-- 방문키오스크
+CREATE TABLE SCHUL.TABLE
+(
+);
+
+-- 방문키오스크
+COMMENT ON TABLE SCHUL.TABLE IS '방문키오스크';
+
+-- 키오스크
+CREATE TABLE SCHUL.KIOSK
+(
+    KIOSK_NO        SERIAL       NOT NULL, -- 키오스크번호
+    KIOSK_MANAGE_NO VARCHAR(300) NOT NULL, -- 키오스크관리번호
+    SCHUL_NO        INTEGER      NOT NULL  -- 학교번호
+);
+
+-- 키오스크
+COMMENT ON TABLE SCHUL.KIOSK IS '키오스크';
+
+-- 키오스크번호
+COMMENT ON COLUMN SCHUL.KIOSK.KIOSK_NO IS '키오스크번호';
+
+-- 키오스크관리번호
+COMMENT ON COLUMN SCHUL.KIOSK.KIOSK_MANAGE_NO IS '키오스크관리번호';
+
+-- 학교번호
+COMMENT ON COLUMN SCHUL.KIOSK.SCHUL_NO IS '학교번호';
+
+-- 키오스크 기본키
+CREATE UNIQUE INDEX PK_KIOSK
+    ON SCHUL.KIOSK
+        ( -- 키오스크
+         KIOSK_NO ASC -- 키오스크번호
+            );
+
+-- 키오스크 기본키
+COMMENT ON INDEX SCHUL.PK_KIOSK IS '키오스크 기본키';
+
+-- 키오스크 유니크 인덱스
+CREATE UNIQUE INDEX UIX_KIOSK_01
+    ON SCHUL.KIOSK
+        ( -- 키오스크
+         KIOSK_MANAGE_NO ASC -- 키오스크관리번호
+            );
+
+-- 키오스크 유니크 인덱스
+COMMENT ON INDEX SCHUL.UIX_KIOSK_01 IS '키오스크 유니크 인덱스';
+
+-- 키오스크
+ALTER TABLE SCHUL.KIOSK
+    ADD CONSTRAINT PK_KIOSK
+        -- 키오스크 기본키
+        PRIMARY KEY
+    USING INDEX PK_KIOSK
+    NOT DEFERRABLE;
+
+-- 키오스크 기본키
+COMMENT ON CONSTRAINT PK_KIOSK ON SCHUL.KIOSK IS '키오스크 기본키';
+
+-- 키오스크
+ALTER TABLE SCHUL.KIOSK
+    ADD CONSTRAINT UK_KIOSK -- 키오스크 유니크 제약
+        UNIQUE
+    USING INDEX UIX_KIOSK_01
+    NOT DEFERRABLE;
+
+-- 키오스크 유니크 제약
+COMMENT ON CONSTRAINT UK_KIOSK ON SCHUL.KIOSK IS '키오스크 유니크 제약';
+
+-- 학교관리자맵핑
+CREATE TABLE SCHUL.SCHUL_MNGR_MAPNG
+(
+    MNGR_NO  INTEGER NOT NULL, -- 관리자번호
+    SCHUL_NO INTEGER NOT NULL  -- 학교번호
+);
+
+-- 학교관리자맵핑
+COMMENT ON TABLE SCHUL.SCHUL_MNGR_MAPNG IS '학교관리자맵핑';
+
+-- 관리자번호
+COMMENT ON COLUMN SCHUL.SCHUL_MNGR_MAPNG.MNGR_NO IS '관리자번호';
+
+-- 학교번호
+COMMENT ON COLUMN SCHUL.SCHUL_MNGR_MAPNG.SCHUL_NO IS '학교번호';
+
+-- 학교관리자맵핑 기본키
+CREATE UNIQUE INDEX PK_SCHUL_MNGR_MAPNG
+    ON SCHUL.SCHUL_MNGR_MAPNG
+        ( -- 학교관리자맵핑
+         MNGR_NO ASC, -- 관리자번호
+         SCHUL_NO ASC -- 학교번호
+            );
+
+-- 학교관리자맵핑 기본키
+COMMENT ON INDEX SCHUL.PK_SCHUL_MNGR_MAPNG IS '학교관리자맵핑 기본키';
+
+-- 학교관리자맵핑
+ALTER TABLE SCHUL.SCHUL_MNGR_MAPNG
+    ADD CONSTRAINT PK_SCHUL_MNGR_MAPNG
+        -- 학교관리자맵핑 기본키
+        PRIMARY KEY
+    USING INDEX PK_SCHUL_MNGR_MAPNG
+    NOT DEFERRABLE;
+
+-- 학교관리자맵핑 기본키
+COMMENT ON CONSTRAINT PK_SCHUL_MNGR_MAPNG ON SCHUL.SCHUL_MNGR_MAPNG IS '학교관리자맵핑 기본키';
+
+-- 학교방문자
+ALTER TABLE SCHUL.SCHUL_VISITR
+    ADD CONSTRAINT FK_SCHUL_TO_SCHUL_VISITR
+        -- 학교 -> 학교방문자
+        FOREIGN KEY (
+                     SCHUL_NO -- 학교번호
+            )
+            REFERENCES SCHUL.SCHUL ( -- 학교
+                                    SCHUL_NO -- 학교번호
+                );
+
+-- 학교 -> 학교방문자
+COMMENT ON CONSTRAINT FK_SCHUL_TO_SCHUL_VISITR ON SCHUL.SCHUL_VISITR IS '학교 -> 학교방문자';
+
+-- 학교방문정보
+ALTER TABLE SCHUL.SCHUL_VISIT_INFO
+    ADD CONSTRAINT FK_SCHUL_VISITR_TO_SCHUL_VISIT_INFO
+        -- 학교방문자 -> 학교방문정보
+        FOREIGN KEY (
+                     VISITR_NO -- 방문자번호
+            )
+            REFERENCES SCHUL.SCHUL_VISITR ( -- 학교방문자
+                                           VISITR_NO -- 방문자번호
+                );
+
+-- 학교방문자 -> 학교방문정보
+COMMENT ON CONSTRAINT FK_SCHUL_VISITR_TO_SCHUL_VISIT_INFO ON SCHUL.SCHUL_VISIT_INFO IS '학교방문자 -> 학교방문정보';
+
+-- 학교방문차량
+ALTER TABLE SCHUL.SCHUL_VISIT_VHCLE
+    ADD CONSTRAINT FK_SCHUL_VISIT_INFO_TO_SCHUL_VISIT_VHCLE
+        -- 학교방문정보 -> 학교방문차량
+        FOREIGN KEY (
+                     VISIT_INFO_NO -- 방문정보번호
+            )
+            REFERENCES SCHUL.SCHUL_VISIT_INFO ( -- 학교방문정보
+                                               VISIT_INFO_NO -- 방문정보번호
+                );
+
+-- 학교방문정보 -> 학교방문차량
+COMMENT ON CONSTRAINT FK_SCHUL_VISIT_INFO_TO_SCHUL_VISIT_VHCLE ON SCHUL.SCHUL_VISIT_VHCLE IS '학교방문정보 -> 학교방문차량';
+
+-- 학교배치
+ALTER TABLE SCHUL.SCHUL_POSTNG
+    ADD CONSTRAINT FK_SCHUL_TO_SCHUL_POSTNG
+        -- 학교 -> 학교배치
+        FOREIGN KEY (
+                     SCHUL_NO -- 학교번호
+            )
+            REFERENCES SCHUL.SCHUL ( -- 학교
+                                    SCHUL_NO -- 학교번호
+                );
+
+-- 학교 -> 학교배치
+COMMENT ON CONSTRAINT FK_SCHUL_TO_SCHUL_POSTNG ON SCHUL.SCHUL_POSTNG IS '학교 -> 학교배치';
+
+-- 키오스크
+ALTER TABLE SCHUL.KIOSK
+    ADD CONSTRAINT FK_SCHUL_TO_KIOSK
+        -- 학교 -> 키오스크
+        FOREIGN KEY (
+                     SCHUL_NO -- 학교번호
+            )
+            REFERENCES SCHUL.SCHUL ( -- 학교
+                                    SCHUL_NO -- 학교번호
+                );
+
+-- 학교 -> 키오스크
+COMMENT ON CONSTRAINT FK_SCHUL_TO_KIOSK ON SCHUL.KIOSK IS '학교 -> 키오스크';
+
+-- 학교관리자맵핑
+ALTER TABLE SCHUL.SCHUL_MNGR_MAPNG
+    ADD CONSTRAINT FK_SCHUL_TO_SCHUL_MNGR_MAPNG
+        -- 학교 -> 학교관리자맵핑
+        FOREIGN KEY (
+                     SCHUL_NO -- 학교번호
+            )
+            REFERENCES SCHUL.SCHUL ( -- 학교
+                                    SCHUL_NO -- 학교번호
+                );
+
+-- 학교 -> 학교관리자맵핑
+COMMENT ON CONSTRAINT FK_SCHUL_TO_SCHUL_MNGR_MAPNG ON SCHUL.SCHUL_MNGR_MAPNG IS '학교 -> 학교관리자맵핑';
+
+-- 학교관리자맵핑
+ALTER TABLE SCHUL.SCHUL_MNGR_MAPNG
+    ADD CONSTRAINT FK_MNGR_TO_SCHUL_MNGR_MAPNG
+        -- 관리자 -> 학교관리자맵핑
+        FOREIGN KEY (
+                     MNGR_NO -- 관리자번호
+            )
+            REFERENCES SCHUL.MNGR ( -- 관리자
+                                   MNGR_NO -- 관리자번호
+                );
+
+-- 관리자 -> 학교관리자맵핑
+COMMENT ON CONSTRAINT FK_MNGR_TO_SCHUL_MNGR_MAPNG ON SCHUL.SCHUL_MNGR_MAPNG IS '관리자 -> 학교관리자맵핑';
