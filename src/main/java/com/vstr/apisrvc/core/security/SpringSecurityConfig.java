@@ -1,8 +1,9 @@
 package com.vstr.apisrvc.core.security;
 
 
-import com.vstr.apisrvc.application.MngmUserService;
-import com.vstr.apisrvc.application.VstrsUserService;
+import com.vstr.apisrvc.application.signature.MngmSrvcUserDetailsService;
+import com.vstr.apisrvc.application.signature.VstrsSrvcUserDetailsService;
+import com.vstr.apisrvc.core.session.SrvcAuthority;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
@@ -33,8 +34,8 @@ public class SpringSecurityConfig {
 
     public static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    final MngmUserService mngmUserService;
-    final VstrsUserService vstrsUserService;
+    final MngmSrvcUserDetailsService mngmSrvcUserDetailsService;
+    final VstrsSrvcUserDetailsService vstrsSrvcUserDetailsService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -78,8 +79,8 @@ public class SpringSecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager() {
         return new ProviderManager(List.of(
-                SrvcAuthority.MNGM.getProviderExecute(mngmUserService),
-                SrvcAuthority.VSTRS.getProviderExecute(vstrsUserService)
+                SrvcAuthority.MNGM.getProviderExecute(mngmSrvcUserDetailsService),
+                SrvcAuthority.VSTRS.getProviderExecute(vstrsSrvcUserDetailsService)
         ));
     }
 }

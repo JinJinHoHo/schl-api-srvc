@@ -1,6 +1,7 @@
-package com.vstr.apisrvc.core.security;
+package com.vstr.apisrvc.core.session;
 
 import com.vstr.apisrvc.core.exception.AuthException;
+import com.vstr.apisrvc.core.security.SpringSecurityConfig;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -8,12 +9,12 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-public class MngmUserAuthenticationProvider implements AuthenticationProvider {
+public class VstrsUserAuthenticationProvider implements AuthenticationProvider {
 
     final UserDetailsService userDetailsService;
 
 
-    public MngmUserAuthenticationProvider(UserDetailsService userDetailsService) {
+    public VstrsUserAuthenticationProvider(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -37,6 +38,6 @@ public class MngmUserAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return MngmUserAuthenticationToken.class.isAssignableFrom(authentication);
+        return VstrsUserAuthenticationToken.class.isAssignableFrom(authentication);
     }
 }

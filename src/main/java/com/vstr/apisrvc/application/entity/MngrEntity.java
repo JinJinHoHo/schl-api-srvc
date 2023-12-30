@@ -1,6 +1,6 @@
 package com.vstr.apisrvc.application.entity;
 
-import com.vstr.apisrvc.application.MngrTyCode;
+import com.vstr.apisrvc.application.code.MngrTyCode;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

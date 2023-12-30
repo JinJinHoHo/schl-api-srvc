@@ -1,0 +1,4 @@
+spring:
+  jpa:
+    database: postgresql
+    show-sql: true

@@ -1,4 +1,4 @@
-package com.vstr.apisrvc.core.security;
+package com.vstr.apisrvc.core.session;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 

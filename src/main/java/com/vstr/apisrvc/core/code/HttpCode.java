@@ -13,7 +13,7 @@ public enum HttpCode implements Code {
 
     final Integer httpCode;
 
-    public String getMsg() {
+    public String getLabel() {
         return success.toString();
     }
 

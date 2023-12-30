@@ -16,6 +16,9 @@ server:
       timeout: 3600
 
 spring:
+  threads:
+    virtual:
+      enabled: true
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://127.0.0.1:5432/mydatabase
@@ -32,12 +35,7 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: create
-    defer-datasource-initialization: true
-  sql:
-    init:
-      mode: always
-
+      ddl-auto: validate
   session:
     store-type: redis
     redis:

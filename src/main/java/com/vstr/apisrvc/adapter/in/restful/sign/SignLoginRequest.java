@@ -1,6 +1,6 @@
 package com.vstr.apisrvc.adapter.in.restful.sign;
 
-import com.vstr.apisrvc.core.security.SrvcAuthority;
+import com.vstr.apisrvc.core.session.SrvcAuthority;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -18,10 +18,10 @@ public class SignLoginRequest {
     private SrvcAuthority srvc;
 
     @NotBlank
-    @Schema(description = "사용자 ID", requiredMode = REQUIRED, defaultValue = "user")
+    @Schema(description = "사용자 ID", requiredMode = REQUIRED, defaultValue = "test")
     private String usrId;
 
     @NotBlank
-    @Schema(description = "사용자 패스워드", requiredMode = REQUIRED, defaultValue = "password")
+    @Schema(description = "사용자 패스워드", requiredMode = REQUIRED, defaultValue = "1234")
     private String pswd;
 }

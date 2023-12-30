@@ -22,3 +22,14 @@ http://localhost:8080/swagger-ui/index.html
 
 ### sign
 - 로그인/로그아웃
+
+## Spring Boot
+
+### 기본 설정 프로파일(로컬 개발 환경 기준으로 설정됨)
+[application.yml](src%2Fmain%2Fresources%2Fapplication.yml)
+
+### 개발환경 및 기타 환경 초기화시 프로파일
+[application-init.yml](src%2Fmain%2Fresources%2Fapplication-init.yml)
+
+### 기본 설정 프로파일(로컬 서버 기준으로 설정됨)
+[application-local.yml](src%2Fmain%2Fresources%2Fapplication-local.yml)

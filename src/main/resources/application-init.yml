@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: true
+    generate-ddl: true
+#    properties:
+#      hibernate:
+#        default_schema: schul
+  sql:
+    init:
+      mode: always
+      encoding: UTF-8
+      data-locations: classpath:db/data.sql
+      schema-locations: classpath:db/schema.sql

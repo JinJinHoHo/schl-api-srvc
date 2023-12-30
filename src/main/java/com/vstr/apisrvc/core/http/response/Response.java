@@ -20,7 +20,7 @@ public class Response {
         timestamp = new Date();
         requestId = "";
         this.code = code;
-        this.message = code.getMsg();
+        this.message = code.getLabel();
     }
 
 

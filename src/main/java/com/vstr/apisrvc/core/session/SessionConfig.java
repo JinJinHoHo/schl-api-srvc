@@ -1,10 +1,10 @@
-package com.vstr.apisrvc.core;
+package com.vstr.apisrvc.core.session;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vstr.apisrvc.core.http.ReqResFilter;
 import com.vstr.apisrvc.core.security.HeaderAndCookieSessionIdResolver;
-import com.vstr.apisrvc.core.security.MngmUserAuthenticationToken;
-import com.vstr.apisrvc.core.security.VstrsUserAuthenticationToken;
 import org.springframework.beans.factory.BeanClassLoaderAware;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
@@ -49,5 +49,10 @@ public class SessionConfig implements BeanClassLoaderAware {
     @Bean
     public HttpSessionIdResolver sessionIdResolver() {
         return new HeaderAndCookieSessionIdResolver();
+    }
+
+    @Bean
+    public FilterRegistrationBean<ReqResFilter> firstFilterRegister() {
+        return new FilterRegistrationBean<>(new ReqResFilter());
     }
 }

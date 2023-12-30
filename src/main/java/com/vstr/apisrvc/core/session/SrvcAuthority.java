@@ -1,10 +1,11 @@
-package com.vstr.apisrvc.core.security;
+package com.vstr.apisrvc.core.session;
 
+import com.vstr.apisrvc.core.util.Execute;
+import com.vstr.apisrvc.core.util.ExecuteParam2;
 import lombok.Getter;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Getter
 public enum SrvcAuthority {
@@ -20,12 +21,18 @@ public enum SrvcAuthority {
 
     private final String patterns;
 
-    private final Execute<? extends AuthenticationProvider, UserDetailsService> providerExecute;
+    private final Execute<? extends AuthenticationProvider, SrvcUserDetailsService> providerExecute;
 
     private final ExecuteParam2<? extends UsernamePasswordAuthenticationToken, String, String> genTokenExecute;
 
+    /**
+     * @param name 권한 명.
+     * @param patterns 권한 적용 패턴.(SpringSecurityConfig 은 아직 적용 안됨.)
+     * @param providerExecute 권한에 적용할 AuthenticationProvider
+     * @param genTokenExecute 권한에 적용할 적용시 사용할 토큰 유형.()
+     */
     SrvcAuthority(String name, String patterns,
-                  Execute<? extends AuthenticationProvider, UserDetailsService> providerExecute,
+                  Execute<? extends AuthenticationProvider, SrvcUserDetailsService> providerExecute,
                   ExecuteParam2<? extends UsernamePasswordAuthenticationToken, String, String> genTokenExecute) {
         this.name = name;
         this.patterns = patterns;
@@ -39,7 +46,7 @@ public enum SrvcAuthority {
      * @param userDetailsService
      * @return
      */
-    public AuthenticationProvider getProviderExecute(UserDetailsService userDetailsService) {
+    public AuthenticationProvider getProviderExecute(SrvcUserDetailsService userDetailsService) {
         if (providerExecute == null || userDetailsService == null)
             throw new RuntimeException(this.name + "에 AuthenticationProvider 지원되지 않음.");
 
@@ -59,22 +66,6 @@ public enum SrvcAuthority {
         return genTokenExecute.execute(id, pw);
     }
 
-}
-
-@FunctionalInterface
-interface Execute<T, S> {
-    /**
-     * Runs this operation.
-     */
-    T execute(S s);
-}
-
-@FunctionalInterface
-interface ExecuteParam2<T, S1, S2> {
-    /**
-     * Runs this operation.
-     */
-    T execute(S1 p1, S2 p2);
 }
 
 

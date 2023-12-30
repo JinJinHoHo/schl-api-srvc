@@ -14,7 +14,7 @@ public class SrvcException extends RuntimeException {
     HttpCode code;
 
     public SrvcException(HttpCode code) {
-        super(code.getMsg());
+        super(code.getLabel());
         this.code = code;
     }
 
@@ -24,7 +24,7 @@ public class SrvcException extends RuntimeException {
     }
 
     public SrvcException(HttpCode code, Throwable cause) {
-        super(code.getMsg(), cause);
+        super(code.getLabel(), cause);
         this.code = code;
     }
 

@@ -34,7 +34,7 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(AuthenticationException.class)
     public Response authenticationException(AuthenticationException e) {
-        return new ErrorResponse(HttpCode.unauthorized);
+        return new ErrorResponse(HttpCode.unauthorized, e.getMessage());
     }
 
     @ExceptionHandler(WebExchangeBindException.class)
@@ -62,10 +62,10 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Response> exception(Exception e) {
-        if(e instanceof org.springframework.web.ErrorResponse){
+        if (e instanceof org.springframework.web.ErrorResponse) {
             return new ResponseEntity<>(
-                    new ErrorResponse(HttpCode.error_response,((org.springframework.web.ErrorResponse)e).getStatusCode().toString()),
-                    ((org.springframework.web.ErrorResponse)e).getStatusCode()
+                    new ErrorResponse(HttpCode.error_response, ((org.springframework.web.ErrorResponse) e).getStatusCode().toString()),
+                    ((org.springframework.web.ErrorResponse) e).getStatusCode()
             );
         }
         log.error("Server Error : {}", e.toString());
