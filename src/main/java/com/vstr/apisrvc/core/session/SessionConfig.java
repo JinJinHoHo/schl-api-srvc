@@ -3,6 +3,7 @@ package com.vstr.apisrvc.core.session;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vstr.apisrvc.core.http.ReqResFilter;
 import com.vstr.apisrvc.core.security.HeaderAndCookieSessionIdResolver;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -42,7 +43,7 @@ public class SessionConfig implements BeanClassLoaderAware {
      * .ClassLoader)
      */
     @Override
-    public void setBeanClassLoader(ClassLoader classLoader) {
+    public void setBeanClassLoader(@NotNull ClassLoader classLoader) {
         this.loader = classLoader;
     }
 

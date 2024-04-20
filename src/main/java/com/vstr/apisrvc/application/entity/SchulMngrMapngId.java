@@ -29,6 +29,7 @@ public class SchulMngrMapngId implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
+        if(super.equals(o)) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         SchulMngrMapngId entity = (SchulMngrMapngId) o;
         return Objects.equals(this.mngrNo, entity.mngrNo) &&

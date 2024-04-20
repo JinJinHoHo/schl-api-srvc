@@ -17,25 +17,6 @@ import java.util.Map;
 
 @Configuration
 public class RedisConfig {
-//
-//    @Bean
-//    public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
-//
-//        RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
-//                .disableCachingNullValues()
-//                .entryTtl(Duration.ofSeconds(600)) // global한 ttl 설정
-//                .computePrefixWith(CacheKeyPrefix.simple())
-//                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()));
-//
-//        return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(connectionFactory)
-//                .cacheDefaults(configuration)
-//                .withInitialCacheConfigurations(Map.of(
-//                                "cacheName",
-//                        RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofSeconds(3600))
-//                        )
-//                )
-//                .build();
-//    }
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory){

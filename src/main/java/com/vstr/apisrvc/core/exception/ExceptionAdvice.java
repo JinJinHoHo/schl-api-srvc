@@ -45,7 +45,10 @@ public class ExceptionAdvice {
                 .collect(Collectors
                         .toMap(
                                 fieldError -> ((FieldError) fieldError).getField(),
-                                fieldError -> fieldError.getDefaultMessage()
+                                fieldError -> {
+                                    String message = fieldError.getDefaultMessage();
+                                    return message == null ? "" : message;
+                                }
                         )
                 );
         return new VaildErrorResponse(HttpCode.vaild_error, e.getReason(), collect);
